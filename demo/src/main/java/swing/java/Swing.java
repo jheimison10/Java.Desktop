@@ -1,11 +1,12 @@
-package swing.java; // O seu pacote
+package swing.java;
 
-// Importações necessárias (note a capitalização correta!)
-import javax.swing.JFrame;   // A janela principal
-import javax.swing.JLabel;   // O componente de texto
-import javax.swing.SwingConstants; // Para centralizar o texto
-
-import java.awt.BorderLayout; // Para posicionar o rótulo
+// Importações necessárias
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;         // NOVO: Importamos o JPanel
+import javax.swing.SwingConstants;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;        // NOVO: Importamos o GridLayout
 
 /**
  * Classe principal para testar uma aplicação Swing simples.
@@ -13,44 +14,53 @@ import java.awt.BorderLayout; // Para posicionar o rótulo
 public class Swing {
 
     public static void main(String[] args) {
-        // O código Swing DEVE rodar na Thread de Despacho de Eventos (Event Dispatch Thread - EDT).
-        // Usamos Runnable e SwingUtilities.invokeLater para garantir isso (boa prática).
-        // Embora um JFrame simples possa funcionar sem, é crucial para a maioria das apps Swing.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 createAndShowGUI();
             }
         });
     }
-    
+
     /**
      * Cria e exibe a interface gráfica.
      */
     private static void createAndShowGUI() {
         // 1. Cria a Janela (JFrame)
-        // O construtor recebe o título da janela
         JFrame frame = new JFrame("Testando APP do Senac");
-        
-        // 2. Define o que acontece quando o usuário clica no 'X'
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // 2. Cria um Rótulo Principal e Centraliza (opcional, mas bom para o topo)
+        JLabel titleLabel = new JLabel("Olá, Você está no APP do Senac!");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        // 3. Cria um Rótulo (JLabel)
-        JLabel label = new JLabel("Olá, Você está no APP do Senac!");
+        // 3. CRIA UM PAINEL para os Nomes
+        // Este JPanel usa um GridLayout: 0 linhas (crescimento automático), 1 coluna.
+        JPanel namesPanel = new JPanel(new GridLayout(0, 1));
         
-        // Centraliza o texto dentro do JLabel
-        label.setHorizontalAlignment(SwingConstants.CENTER);
+        // 4. Cria e Adiciona os Rótulos de Nomes ao Painel
+        JLabel label2 = new JLabel("Jheimison");
+        JLabel label3 = new JLabel("João");
+        JLabel label4 = new JLabel("Andre");
         
-        // 4. Adiciona o Rótulo à Janela
-        // Usamos BorderLayout.CENTER para garantir que ele preencha a janela
-        frame.getContentPane().add(label, BorderLayout.CENTER);
+        // Centraliza os textos dentro de cada JLabel e os adiciona ao painel
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
+        label3.setHorizontalAlignment(SwingConstants.CENTER);
+        label4.setHorizontalAlignment(SwingConstants.CENTER);
+
+        namesPanel.add(label2);
+        namesPanel.add(label3);
+        namesPanel.add(label4);
         
-        // 5. Ajusta o tamanho da janela para se adequar aos componentes
-        frame.pack();
+        // 5. Adiciona os componentes à Janela (JFrame)
+        // Adiciona o título no topo (Norte do BorderLayout)
+        frame.getContentPane().add(titleLabel, BorderLayout.NORTH);
         
-        // Definimos um tamanho mínimo para a janela (opcional)
-        frame.setSize(400, 200);
-        
-        // 6. Torna a janela visível
+        // Adiciona o painel de nomes no centro
+        frame.getContentPane().add(namesPanel, BorderLayout.CENTER);
+
+        // 6. Configura e Exibe a Janela
+        frame.setSize(400, 250); // Aumentamos um pouco o tamanho para caber tudo
+        frame.setLocationRelativeTo(null); // Centraliza na tela
         frame.setVisible(true);
     }
 }
